@@ -14,9 +14,8 @@ namespace Scripts.Utils
         }
 
         public static Tensor operator *(Tensor a, Tensor b) => new Tensor(MultiplyMatrices(a.Arr, b.Arr));
-
+        public static Tensor operator *(Tensor a, float b) => new Tensor(MultiplyMatrixByScalar(a.Arr, b));
         public static Tensor operator +(Tensor a, Tensor b) => new Tensor(AddMatrices(a.Arr, b.Arr));
-        
         public static Tensor operator -(Tensor a, Tensor b) => new Tensor(SubMatrices(a.Arr, b.Arr));
         public Tensor T() => new Tensor(Transpose(Arr));
             
@@ -55,6 +54,28 @@ namespace Scripts.Utils
 
             return transposeMatrix;
         }
+        
+        
+        static float[,] MultiplyMatrixByScalar(float[,] matrix, float scalar)
+        {
+            int rows = matrix.GetLength(0);
+            int cols = matrix.GetLength(1);
+
+            float[,] result = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    result[i, j] = matrix[i, j] * scalar;
+                }
+            }
+
+            return result;
+        }
+        
+        
+        
         static float[,] MultiplyMatrices(float[,] matrixA, float[,] matrixB)
         {
             int rowsA = matrixA.GetLength(0);
