@@ -72,5 +72,21 @@ namespace Scripts.Utils
 
             return sum;
         }
+        public static float[] SubVectors(float[] x, float[] y)
+        {
+            if (!VectorOperationAllow(x, y))
+            {
+                return new float[0];
+            }
+            
+            float[] sum = new float[x.Length];
+            for (int i = 0; i < x.Length; i++)
+            {
+                sum[i] = x[i] - y[i];
+            }
+
+            return sum;
+        }
+        
     }
 }
