@@ -21,6 +21,7 @@ namespace Scripts.Utils
 
             return true;
         }
+        
         public static float Dot(float[] x, float[] y)
         {
 

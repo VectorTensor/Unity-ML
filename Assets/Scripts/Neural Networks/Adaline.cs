@@ -1,116 +1,66 @@
 using System.Linq;
 using Scripts.Utils;
+using UnityEditor.UI;
 
 namespace Scripts.Neural_Networks
 {
     public class Adaline
     {
-        
-        private float[][] _features;
-        private float[] _target;
-        private float[] _weights;
+        private Tensor _weights;
         private float _bias;
+
+        private float[] _losses;
         private float _eta;
-        private int _iter;
-        private float[] _errors;
+        private int _niter;
 
-        public Adaline(float eta ,int iter)
+        public Adaline(float eta, int niter)
         {
-            _eta = eta;
-            _iter = iter;
 
+            _eta = eta;
+            _niter = niter;
+            
         }
 
-        public Adaline Fit(float[][] x, int[] y)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="X"></param>
+        /// <param name="y"> y must be column matrix </param>
+        public Adaline Fit(Tensor X, Tensor y)
         {
-            _features = x;
-            _target = y.Select(d => (float)d).ToArray();
-            
-            //1. First we need to randomly initialize weights and bias
-            // 2. Then take the first data xw+b = y
-            // 3. Calc the error MSE with y cap i.e the real value
-            // 4. Use gradient descent to calc new weights
-
-            _weights = RandomGenerator.RandomFloatArray(_features.Length);
+            _weights = new Tensor(RandomGenerator.RandomFloatArray(X.Length[1]));
             _bias = 0;
-            this._errors = new float[this._iter];
+            _losses = new float[] { };
 
-            for (int i = 0; i < this._iter; i++)
+            for (int i = 0; i < _niter; i++)
             {
-                for (int j = 0; j < _target.Length; j++)
-                {
-                    // float e = _target[j] - Predict(_features[j]);
-                    // float update = _eta * (e);
-                    // _weights = Matrix.AddVectors(_weights, Matrix.MulVectByNumber(_features[j], update));
-                    // _bias += update;
-                    // error += e;
-                    
-                    
-                
-                    //error = _target[]
+                Tensor net_input = NetInput(X);
+                Tensor output = Activation(net_input);
 
-                }
+                Tensor error = y - output; // Column matrix
 
-                float[] y_pred = NetInput(_features);
-                
-                float[] error = Matrix.SubVectors(_target, y_pred);
+                _weights += _eta * 2.0f * X.T() * error * X.Length[0];
 
-                float sum = 0;
-                float index = 0;
-             // foreach (var e in error)
-             //    {
-             //
-             //        sum += e*_features[][];
-             //        index++;
-             //    }
-             //
-             //    _weights = _features[][].Select(d => d * sum * (2 / _target.Length));
+                _bias += _eta * 2.0f * error.Mean(1)[0,0];
 
-
+                _losses.Append(error.Mean(1)[0, 0]);
 
             }
 
             return this;
-
         }
 
-        private float[] NetInput(float[][] x)
+        public Tensor NetInput(Tensor x)
         {
-            
-            // Perform matrix multiplication
-            // x*features + bias
-            float[] res = new float[x[0].Length];
 
-            for(int i = 0 ; i<x[0].Length;i++)
-            {
+            return x * _weights.T() + _bias;
 
-                res.Append(Matrix.Dot(x[i], _weights) + _bias);
-
-            }
-
-            return res;
         }
 
-        private float[] Activation(float[] x)
+        public Tensor Activation(Tensor x)
         {
             return x;
         }
 
-        public int Predict(float[] x)
-        {
-
-            // if (NetInput(x) > 0)
-            // {
-            //     return 1;
-            // }
-            // else
-            // {
-            //     return 0;
-            // }
-            return 0;
-
-        } 
-        
-        
     }
 }

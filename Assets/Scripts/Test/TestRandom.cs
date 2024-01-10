@@ -18,6 +18,11 @@ namespace Scripts.Test
             Tensor y = t1 + t2;
 
 
+            Vector v = t2[0];
+
+
+
+
 
         }
     }
