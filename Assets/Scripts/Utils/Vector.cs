@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Scripts.Utils
@@ -5,10 +6,12 @@ namespace Scripts.Utils
     public class Vector
     {
         public float[] Arr;
+        public int Length;
 
         public Vector(float[] a)
         {
             Arr = a;
+            Length = a.Length;
         }
         
         
@@ -24,7 +27,34 @@ namespace Scripts.Utils
             return true;
         }
         
-        
+
+
+        public float this[int index]
+        {
+            get
+            {
+                if (index >= 0 && index < Arr.Length)
+                {
+                    return Arr[index];
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Index out of range");
+                }
+            }
+            set
+            {
+                if (index >= 0 && index < Arr.Length)
+                {
+                    Arr[index] = value;
+                }
+                else
+                {
+                    throw new IndexOutOfRangeException("Index out of range");
+                }
+            }
+        }
+
         public static Vector operator +(Vector a, Vector b) =>  new Vector(AddVectors(a.Arr, b.Arr));
         
         public static float operator *(Vector a, Vector b) => Dot(a.Arr, b.Arr);
