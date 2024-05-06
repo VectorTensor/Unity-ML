@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using Utils;
+using Utils.Services;
 
 public class TextCSVTest
 {
@@ -31,7 +32,7 @@ public class TextCSVTest
     {
         yield return null;
         _textAssetParser.GetCSV(_csv);
-        string[] x = _textAssetParser.textString.Split("\n");
+        string[] x = _textAssetParser.TextString.Split("\n");
         Assert.AreEqual("6,148,72,35,0,33.6,0.627,50,1\r",x[0]);
     }
 

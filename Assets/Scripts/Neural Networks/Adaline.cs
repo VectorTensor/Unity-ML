@@ -1,9 +1,7 @@
 using System.Linq;
-using Scripts.Utils;
-using UnityEditor.UI;
+using Utils;
 
-
-namespace Scripts.Neural_Networks
+namespace Neural_Networks
 {
     public class Adaline
     {

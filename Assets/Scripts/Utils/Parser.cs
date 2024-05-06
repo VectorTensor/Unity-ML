@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
-namespace Scripts.Utils
+using Utils.Services;
+
+namespace Utils
 {
     public abstract class Parser<T> 
     {

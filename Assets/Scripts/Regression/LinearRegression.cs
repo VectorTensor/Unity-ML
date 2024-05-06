@@ -1,4 +1,4 @@
-namespace Scripts.Regression 
+namespace Regression 
 {
     
     public class LinearRegression

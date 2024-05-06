@@ -1,32 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
+using Utils.Services;
 
-
-namespace Scripts.Utils
+namespace Utils
 {
     public class TextAssetParser<T>:  Parser<T>
     {
-        public string textString;
+        public string TextString;
         private IGetCSVService _getCsvService;
+        private IIndexerService _indexerService;
 
         
 
         public override void GetCSV(IGetCSVService  csvService)
         {
 
-            textString = csvService.GetData();
+            TextString = csvService.GetData();
         }
 
         public override void Parse(bool hasHeader = true, string[] header = null)
         {
 
-            string[] Lines = textString.Split("\n");
+            string[] lines = TextString.Split("\n");
 
             if (hasHeader)
             {
-                var p = Lines[0];
+                var p = lines[0];
                 p = p.Replace(" ", "");
                 Header = Regex.Split(p, ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
                 
@@ -43,49 +43,51 @@ namespace Scripts.Utils
                 Header = header;
             }
 
-            foreach (var line in Lines)
+            foreach (var line in lines)
             {
                 
                 
-                string[] data_values =  Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+                string[] dataValues =  Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 
-                if (Header.Length != data_values.Length)
+                if (Header.Length != dataValues.Length)
                 {
-                    Debug.LogError("Length of header mismatch with number of elements" +  Lines);
+                    Debug.LogError("Length of header mismatch with number of elements" +  lines);
                     return;
                 }
 
                 int index = 0;
-                Dictionary<string, T > Record = new();
-                foreach (string data_value in data_values)
+                Dictionary<string, T > record = new();
+                foreach (string dataValue in dataValues)
                 {
 
                     if (typeof(T) == typeof(float ))
                     {
                         
-                       Record.Add(Header[index],(T) (object) float.Parse(data_value)); 
+                       record.Add(Header[index],(T) (object) float.Parse(dataValue)); 
                         
                         
                     }
                     else
                     {
-                        Record.Add(Header[index],(T)(object) data_value);
+                        record.Add(Header[index],(T)(object) dataValue);
                     }
 
                     index++;
 
                 }
                 
-                Frame.Add(Record);
-
-                
-                
-
-
+                Frame.Add(record);
 
 
             }
 
+            _indexerService = new IndexerService<T>(Frame);
+
+
+
         }
+
+
+        private float[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns();
     }
 }

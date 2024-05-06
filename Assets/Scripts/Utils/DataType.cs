@@ -1,4 +1,4 @@
-﻿namespace Scripts.Utils
+﻿namespace Utils
 {
     public enum EDataType
     {

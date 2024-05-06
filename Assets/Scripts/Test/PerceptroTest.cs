@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PerceptroTest : MonoBehaviour
+namespace Test
 {
+    public class PerceptroTest : MonoBehaviour
+    {
 
+    }
 }

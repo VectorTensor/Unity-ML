@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using Scripts.Utils;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Utils;
 
 public class TensorTest
 {

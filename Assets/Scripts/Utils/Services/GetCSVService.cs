@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Utils
+namespace Utils.Services
 {
     public class GetCSVService : MonoBehaviour, IGetCSVService
     {

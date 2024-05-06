@@ -1,6 +1,7 @@
 using System.Linq;
-using Scripts.Utils;
-namespace Scripts.Neural_Networks
+using Utils;
+
+namespace Neural_Networks
 {
     public class Perceptron
     {
