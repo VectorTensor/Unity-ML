@@ -5,7 +5,7 @@ namespace Utils.Services
     public interface IIndexerService
     {
 
-        public float[,] GetRequiredDataFromColumns();
+        public float[,] GetRequiredDataFromColumns(string[] columns);
 
 
 

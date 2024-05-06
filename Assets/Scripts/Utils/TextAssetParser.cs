@@ -88,6 +88,6 @@ namespace Utils
         }
 
 
-        private float[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns();
+        private float[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns(x);
     }
 }

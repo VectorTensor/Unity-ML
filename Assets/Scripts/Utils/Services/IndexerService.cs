@@ -2,6 +2,10 @@
 
 namespace Utils.Services
 {
+    /// <summary>
+    /// This service is takes data frame and gets columns data
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class IndexerService<T>:IIndexerService
     {
         private List<Dictionary<string, T>> _frame;
@@ -11,7 +15,7 @@ namespace Utils.Services
         {
             _frame = x;
         }
-        public float[,] GetRequiredDataFromColumns()
+        public float[,] GetRequiredDataFromColumns(string[] columns)
         {
             
             return new float[,] { { 1, 2 } };
