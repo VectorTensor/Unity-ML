@@ -9,7 +9,7 @@ namespace Utils
     {
         public string TextString;
         private IGetCSVService _getCsvService;
-        private IIndexerService _indexerService;
+        private IIndexerService<T> _indexerService;
 
         
 
@@ -88,6 +88,6 @@ namespace Utils
         }
 
 
-        private float[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns(x);
+        private T[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns(x);
     }
 }

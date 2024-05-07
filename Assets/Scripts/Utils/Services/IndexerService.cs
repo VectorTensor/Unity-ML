@@ -6,7 +6,7 @@ namespace Utils.Services
     /// This service is takes data frame and gets columns data
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class IndexerService<T>:IIndexerService
+    public class IndexerService<T>:IIndexerService<T>
     {
         private List<Dictionary<string, T>> _frame;
 
@@ -15,11 +15,28 @@ namespace Utils.Services
         {
             _frame = x;
         }
-        public float[,] GetRequiredDataFromColumns(string[] columns)
+        public T[,] GetRequiredDataFromColumns(string[] columns)
         {
-            
-            return new float[,] { { 1, 2 } };
-            
+            T[,] arr = new T[_frame.Count,columns.Length];
+
+            for (int i = 0; i < _frame.Count ; i++)
+            {
+
+                var record = _frame[i];
+                int j = 0;
+                foreach (var x in columns)
+                {
+
+                    arr[i, j] = record[x];
+
+                    j++;
+                }
+
+            }
+
+            return arr;
+
+
         }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Utils.Services
 {
-    public interface IIndexerService
+    public interface IIndexerService<T>
     {
 
-        public float[,] GetRequiredDataFromColumns(string[] columns);
+        public T[,] GetRequiredDataFromColumns(string[] columns);
 
 
 
