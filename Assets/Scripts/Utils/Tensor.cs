@@ -25,6 +25,8 @@ namespace Scripts.Utils
             {
                 array2D[0, i] = a[i];
             }
+
+            Arr = array2D;
         }
 
         public static Tensor operator *(Tensor a, Tensor b) => new Tensor(MultiplyMatrices(a.Arr, b.Arr));

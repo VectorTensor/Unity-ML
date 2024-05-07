@@ -1,7 +1,5 @@
 using System.Linq;
 using Scripts.Utils;
-using UnityEditor.UI;
-
 namespace Scripts.Neural_Networks
 {
     public class Perceptron
