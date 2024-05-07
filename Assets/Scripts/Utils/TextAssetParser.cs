@@ -11,7 +11,20 @@ namespace Utils
         private IGetCSVService _getCsvService;
         private IIndexerService<T> _indexerService;
 
-        
+
+        public TextAssetParser(IGetCSVService csvService, bool hasHeader = true, string[] header = null)
+        {
+            
+            GetCSV(csvService);
+            
+            Parse(hasHeader,header);
+            
+        }
+
+        public TextAssetParser()
+        {
+            
+        }
 
         public override void GetCSV(IGetCSVService  csvService)
         {
@@ -88,6 +101,6 @@ namespace Utils
         }
 
 
-        private T[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns(x);
+        public T[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns(x);
     }
 }

@@ -43,6 +43,7 @@ public class TextCSVTest
         _textAssetParserStr.Parse(false,new string[]{"r","a","p","z","x","m","l","i","d",}); 
         Assert.AreEqual("6",_textAssetParserStr.Frame[0]["r"]);
         
+        
     }
     
     
