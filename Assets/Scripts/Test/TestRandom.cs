@@ -1,8 +1,7 @@
-using System;
 using UnityEngine;
-using Scripts.Utils;
+using Utils;
 
-namespace Scripts.Test
+namespace Test
 {
     public class TestRandom : MonoBehaviour
     {

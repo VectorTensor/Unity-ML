@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-namespace Scripts.Utils
+namespace Utils
 {
     public class Tensor
     {

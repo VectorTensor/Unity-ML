@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Scripts.Utils
+namespace Utils
 {
     public class Matrix
     {

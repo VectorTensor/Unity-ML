@@ -1,14 +1,9 @@
-﻿namespace Scripts.Utils
-{
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text.RegularExpressions;
-    using UnityEngine;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
 
-    
-    
-    
+namespace Utils
+{
     public class CSVParser 
     {
         public List<Dictionary<string,string>> Frame = new();

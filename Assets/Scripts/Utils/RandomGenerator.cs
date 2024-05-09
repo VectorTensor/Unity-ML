@@ -1,6 +1,6 @@
 using System;
 
-namespace Scripts.Utils
+namespace Utils
 {
     public class RandomGenerator
     {
