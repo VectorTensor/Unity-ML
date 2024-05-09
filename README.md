@@ -10,5 +10,3 @@ Basic Perceptron Model for classification. [Perceptron](https://github.com/Vecto
 
 
 
-## First Release
-First Release coming on Feb 5th. Expected to complete Perceptron, Adaline, Logistic Regression, Linear Regression with regularization. 
