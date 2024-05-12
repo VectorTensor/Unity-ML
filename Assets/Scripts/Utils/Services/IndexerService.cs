@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine.Apple;
 
 namespace Utils.Services
 {
@@ -35,6 +36,40 @@ namespace Utils.Services
             }
 
             return arr;
+
+
+        }
+
+        public List<Dictionary<string, T>> GetRequiredIndex(int x, int y, int z)
+        {
+            // Check size exceptions
+            List<Dictionary<string, T>> reqFrame= new();
+
+            for (int i = x; i < y; i = i + z)
+            {
+                
+                reqFrame.Add(_frame[i]);
+                
+            }
+
+            return reqFrame;
+
+        }
+
+        public List<Dictionary<string, T>> GetRequiredIndex(int[] x)
+        {
+
+            List<Dictionary<string, T>> reqFrame = new();
+
+            foreach (var i in x)
+            {
+                
+                
+                reqFrame.Add(_frame[i]);
+                
+            }
+
+            return reqFrame;
 
 
         }

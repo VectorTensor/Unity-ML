@@ -7,6 +7,11 @@ namespace Utils.Services
 
         public T[,] GetRequiredDataFromColumns(string[] columns);
 
+        public List<Dictionary<string, T>> GetRequiredIndex(int x, int y, int z);
+
+
+        public List<Dictionary<string, T>> GetRequiredIndex(int[] x);
+
 
 
     }

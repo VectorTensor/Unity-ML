@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using Utils.Services;
@@ -26,10 +27,21 @@ namespace Utils
             
         }
 
+        public TextAssetParser(List<Dictionary<string, T>> f)
+        {
+
+            Frame = f;
+
+            _indexerService = new IndexerService<T>(Frame);
+            Header = Frame[0].Keys.ToArray();
+        }
+
         public override void GetCSV(IGetCSVService  csvService)
         {
 
             TextString = csvService.GetData();
+
+
         }
 
         public override void Parse(bool hasHeader = true, string[] header = null)
@@ -64,6 +76,7 @@ namespace Utils
 
                 if (Header.Length != dataValues.Length)
                 {
+                    if (dataValues.Length == 0) continue;
                     Debug.LogError("Length of header mismatch with number of elements" +  lines);
                     return;
                 }
@@ -100,7 +113,35 @@ namespace Utils
 
         }
 
+        public T[,] GetValues()
+        {
+
+            T[,] values = new T[Frame.Count, Frame[0].Count];
+            int i = 0;
+            foreach (var x in Frame)
+            {
+                int j = 0;
+                foreach (var y in x.Values)
+                {
+                    values[i, j] = y;
+                    j++;
+                }
+
+                i++;
+
+
+            }
+
+            return values;
+
+        }
 
         public T[,] this[string[] x] => _indexerService.GetRequiredDataFromColumns(x);
+        
+        //x -> start y-> end z -> increment
+        public TextAssetParser<T> this[int x, int y, int z] => new TextAssetParser<T>(_indexerService.GetRequiredIndex(x, y, z));
+        
+        public TextAssetParser<T> this[int[] x] => new TextAssetParser<T>(_indexerService.GetRequiredIndex(x));
+        
     }
 }
