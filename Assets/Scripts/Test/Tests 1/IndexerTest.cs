@@ -90,4 +90,23 @@ public class IndexerTest
 
         
     }
+    [UnityTest]
+    public IEnumerator IndexerTestWithEnumeratorPassesWithCSVList()
+    {
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+        var x = textAsset[new []{1,3,2 }];
+        Assert.AreEqual(
+            new float[,]
+            {
+                
+                {3,4,6},
+                {4,6,12},
+                {5,6,12}
+            },x.GetValues()
+            );
+
+        
+    }
 }
