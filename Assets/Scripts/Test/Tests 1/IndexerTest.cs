@@ -60,15 +60,34 @@ public class IndexerTest
         // Use yield to skip a frame.
         yield return null;
         var x = textAsset[new string[] { "r" ,"a"}];
+        // Assert.AreEqual(
+        //     new float[,]
+        //     {
+        //         
+        //         {1,2,},
+        //         {3,4,},
+        //         {5,6,}
+        //     },x
+        //     );
+
+    }
+    [UnityTest]
+    public IEnumerator IndexerTestWithEnumeratorPassesWithCSVNumber()
+    {
+        // Use the Assert class to test conditions.
+        // Use yield to skip a frame.
+        yield return null;
+        var x = textAsset[0,3,1];
         Assert.AreEqual(
             new float[,]
             {
                 
-                {1,2,},
-                {3,4,},
-                {5,6,}
-            },x
+                {1,2,6},
+                {3,4,6},
+                {5,6,12}
+            },x.GetValues()
             );
 
+        
     }
 }
