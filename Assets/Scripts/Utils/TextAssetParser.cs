@@ -140,5 +140,8 @@ namespace Utils
         
         //x -> start y-> end z -> increment
         public TextAssetParser<T> this[int x, int y, int z] => new TextAssetParser<T>(_indexerService.GetRequiredIndex(x, y, z));
+        
+        public TextAssetParser<T> this[int[] x] => new TextAssetParser<T>(_indexerService.GetRequiredIndex(x));
+        
     }
 }

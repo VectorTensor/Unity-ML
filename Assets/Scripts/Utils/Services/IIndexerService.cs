@@ -10,6 +10,9 @@ namespace Utils.Services
         public List<Dictionary<string, T>> GetRequiredIndex(int x, int y, int z);
 
 
+        public List<Dictionary<string, T>> GetRequiredIndex(int[] x);
+
+
 
     }
 }
