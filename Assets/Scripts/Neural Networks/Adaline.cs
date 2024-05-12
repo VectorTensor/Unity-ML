@@ -1,5 +1,9 @@
+using System.Data;
+using System.IO;
 using System.Linq;
+using UnityEngine;
 using Utils;
+using Utils.Model;
 
 namespace Neural_Networks
 {
@@ -20,6 +24,15 @@ namespace Neural_Networks
             
         }
 
+        public Adaline(AdalineModelDto data)
+        {
+            _weights = data._weights;
+            _bias = data._bias;
+            _eta = data._eta;
+            _niter = data._niter;
+        }
+        
+
         /// <summary>
         /// 
         /// </summary>
@@ -38,11 +51,12 @@ namespace Neural_Networks
 
                 Tensor error = y - output; // Column matrix
 
-                _weights += _eta * 2.0f * X.T() * error * X.Length[0];
+                _weights += (_eta * 2.0f * X.T() * error *(1/ (float) X.Length[0])).T();
 
-                _bias += _eta * 2.0f * error.Mean(1)[0,0];
+                var gh = error.Mean(0);
+                _bias += _eta * 2.0f * error.Mean(0)[0,0];
 
-                _losses.Append(error.Mean(1)[0, 0]);
+                _losses.Append(error.Mean(0)[0, 0]);
 
             }
 
@@ -61,5 +75,31 @@ namespace Neural_Networks
             return x;
         }
 
+        public Tensor Predict(Tensor x)
+        {
+            
+            Tensor net_input = NetInput(x);
+            Tensor output = Activation(net_input);
+            return output;
+
+
+        }
+
+        public void SaveModel(string loc)
+        {
+            AdalineModelDto modelTrain= new();
+            modelTrain._weights = _weights;
+            modelTrain._bias = _bias;
+            modelTrain._eta = _eta;
+            modelTrain._niter = _niter;
+            
+            
+            string s;
+            s = JsonUtility.ToJson(modelTrain);
+            File.WriteAllText(loc, s);
+        }
+        
+
+        
     }
 }

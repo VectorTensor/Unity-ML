@@ -1,8 +1,10 @@
 using System;
+using System.IO;
 using System.Linq;
 
 namespace Utils
 {
+    [Serializable]
     public class Tensor
     {
 
@@ -163,34 +165,70 @@ namespace Utils
             return transposeMatrix;
         }
 
+        // public Tensor Mean(int axis)
+        // {
+        //
+        //     int rows = Length[axis];
+        //     int cols = Length[(axis+1)%2];
+        //
+        //     float[] means = new float[] { };
+        //
+        //     for (int i = 0; i < cols; i++)
+        //     {
+        //
+        //         float sum = 0 ;
+        //         for (int j = 0; j < rows ; j++)
+        //         {
+        //
+        //             sum += Arr[j, i];
+        //
+        //
+        //         }
+        //
+        //         means.Append(sum / rows);
+        //     }
+        //
+        //     return new Tensor(means);
+        //
+        //
+        // }
+        
         public Tensor Mean(int axis)
         {
 
-            int rows = Length[axis];
-            int cols = Length[(axis+1)%2];
+            int first = Length[axis];
+            int second = Length[(axis+1)%2];
 
-            float[] means = new float[] { };
+            float[] means = new float[second];
 
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < second; i++)
             {
-
                 float sum = 0 ;
-                for (int j = 0; j < rows ; j++)
+                for (int j = 0; j < first ; j++)
                 {
 
-                    sum += Arr[j, i];
-
+                    if (axis == 0)
+                    {
+                        
+                        sum += Arr[j, i];
+                    }
+                    else
+                    {
+                        sum += Arr[i, j];
+                    }
+                
 
                 }
 
-                means.Append(sum / rows);
+                means[i] = sum;
+
+
             }
 
             return new Tensor(means);
 
 
         }
-        
         
         static float[,] MultiplyMatrixByScalar(float[,] matrix, float scalar)
         {
