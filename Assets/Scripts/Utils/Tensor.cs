@@ -77,6 +77,8 @@ namespace Utils
         }
         
         
+        
+        
         public float this[int i , int j]
         {
             get
@@ -320,6 +322,70 @@ namespace Utils
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// This function takes a condition and for every element of the tensor that statisfies the condition it returns a otherwise b
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public Tensor Where(Func<float, bool> condition, float a, float b)
+        {
+
+            float[,] data = new float[Arr.GetLength(0),Arr.GetLength(1)];
+            for (int i = 0; i < Arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < Arr.GetLength(1); j++)
+                {
+
+                    data[i,j] = condition(Arr[i,j]) ? a : b;
+
+                }
+                
+            }
+
+            return new Tensor(data);
+
+        }
+        
+        /// <summary>
+        /// Overload for the where function where in one of the condition we just the leave the value as it is if default condition = true, we get the same value for true 
+        /// and default condition = false we get the same value for false condition
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="a"></param>
+        /// <param name="defaultCondtion"></param>
+        /// <returns></returns>
+        public Tensor Where(Func<float, bool> condition, float a, bool defaultCondtion = false)
+        {
+
+            float[,] data = new float[Arr.GetLength(0),Arr.GetLength(1)];
+            for (int i = 0; i < Arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < Arr.GetLength(1); j++)
+                {
+
+                    if (!defaultCondtion)
+                    {
+                        
+                        data[i,j] = condition(Arr[i,j]) ? a : Arr[i,j];
+                    }
+                    else
+                    {
+                        
+                        data[i,j] = condition(Arr[i,j]) ? Arr[i,j]:a;
+                    }
+
+                }
+                
+            }
+
+            return new Tensor(data);
+
         }
 
         

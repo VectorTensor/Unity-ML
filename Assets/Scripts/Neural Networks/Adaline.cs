@@ -26,7 +26,7 @@ namespace Neural_Networks
 
         public Adaline(AdalineModelDto data)
         {
-            _weights = data._weights;
+            _weights = data._weights.GetTensor();
             _bias = data._bias;
             _eta = data._eta;
             _niter = data._niter;
@@ -88,7 +88,7 @@ namespace Neural_Networks
         public void SaveModel(string loc)
         {
             AdalineModelDto modelTrain= new();
-            modelTrain._weights = _weights;
+            modelTrain._weights = SerializableTensor.BuildFromTensor(_weights);
             modelTrain._bias = _bias;
             modelTrain._eta = _eta;
             modelTrain._niter = _niter;

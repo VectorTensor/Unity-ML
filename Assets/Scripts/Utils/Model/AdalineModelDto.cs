@@ -3,7 +3,7 @@
     public class AdalineModelDto
     {
         
-        public Tensor _weights;
+        public SerializableTensor _weights;
         public float _bias;
 
         public float _eta;

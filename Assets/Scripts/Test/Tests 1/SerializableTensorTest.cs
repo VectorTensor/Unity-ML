@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -6,6 +7,7 @@ using UnityEngine.TestTools;
 using Utils;
 using Utils.Model;
 
+[Serializable]
 public class SerializableTensorTest
 {
     private SerializableTensor s;
@@ -23,6 +25,14 @@ public class SerializableTensorTest
         var y = s.arr;
         Assert.AreEqual(new float[]{1f,2f,3,4,2,1},y);
         // Use the Assert class to test conditions
+    }
+
+    [Test]
+    public void SerializableTestRev()
+    {
+        var y = s.GetTensor();
+        Assert.AreEqual(new[,] { { 1f, 2f }, { 3, 4 },{2,1} },y.Arr);
+        
     }
 
    
