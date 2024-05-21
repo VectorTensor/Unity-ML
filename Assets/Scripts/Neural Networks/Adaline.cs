@@ -42,7 +42,7 @@ namespace Neural_Networks
         {
             _weights = new Tensor(RandomGenerator.RandomFloatArray(X.Length[1]));
             _bias = 0;
-            _losses = new float[] { };
+            _losses = new float[_niter] ;
 
             for (int i = 0; i < _niter; i++)
             {
@@ -53,10 +53,10 @@ namespace Neural_Networks
 
                 _weights += (_eta * 2.0f * X.T() * error *(1/ (float) X.Length[0])).T();
 
-                var gh = error.Mean(0);
+                //var gh = error.Mean(0);
                 _bias += _eta * 2.0f * error.Mean(0)[0,0];
 
-                _losses.Append(error.Mean(0)[0, 0]);
+                _losses[i] = (error.Mean(0)[0, 0]);
 
             }
 
@@ -66,6 +66,9 @@ namespace Neural_Networks
         public Tensor NetInput(Tensor x)
         {
 
+            var p = x * _weights.T();
+            var m = p + _bias;
+            // Need to check this function it returns NaN
             return x * _weights.T() + _bias;
 
         }
@@ -80,7 +83,7 @@ namespace Neural_Networks
             
             Tensor net_input = NetInput(x);
             Tensor output = Activation(net_input);
-            return output;
+            return output.Where((s)=> s > 0.5f,1,0);
 
 
         }

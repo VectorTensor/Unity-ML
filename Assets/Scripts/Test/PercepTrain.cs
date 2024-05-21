@@ -16,15 +16,16 @@ namespace Test
         private void Start()
         {
             
-            txtParser = new TextAssetParser<float>(_csvSerivce,false, new []{"1","2","3","4","5","6","7","8","t"});
+            txtParser = new TextAssetParser<float>(_csvSerivce,true );
             header = txtParser.Header;
-            float[,] features = txtParser[0, 701, 1][new[] { "1", "2", "3", "4", "5", "6", "7", "8" }];
-            float[,] y = txtParser[0, 701, 1][new[] { "t" }];
+            float[,] features = txtParser[0, 4, 1][new[] {"A","B"}];
+            float[,] y = txtParser[0, 4, 1][new[] { "O" }];
             Tensor X_train = new Tensor(features);
             Tensor Y_train = new Tensor(y);
-            Adaline model = new Adaline(0.01f, 10);
+            Adaline model = new Adaline(0.0001f, 10000);
             model.Fit(X_train, Y_train);
             model.SaveModel("Assets/models/ad1.json");
+            Debug.Log($"Training completed on {model}");
             
         }
     }

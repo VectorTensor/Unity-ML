@@ -10,6 +10,8 @@ namespace Test
 {
     public class PerceptroTest : MonoBehaviour
     {
+        public GetCSVService _csvSerivce;
+        private TextAssetParser<float> txtParser;
         public void Start()
         {
             
@@ -23,10 +25,19 @@ namespace Test
             // model.Fit(X_train, Y_train);
             // model.SaveModel("Assets/models/ad.json");
 
-            var x = File.ReadAllText("Assets/models/ad.json");
+            var x = File.ReadAllText("Assets/models/ad1.json");
             AdalineModelDto d = JsonUtility.FromJson<AdalineModelDto>(x);
             var p = new Adaline(d);
-            
+            var  parser = new TextAssetParser<float>(_csvSerivce,true);
+
+            float[,] feat_test = parser[0, 4, 1][new[] { "A", "B"}];
+            float[,] y_test = parser[ 0, 4, 1 ][new[] { "O" }];
+            Tensor X_test = new Tensor(feat_test);
+            Tensor Y_test = new Tensor(y_test);
+            var y_prd = p.Predict(X_test);
+
+
+
         }
     }
 }

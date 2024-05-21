@@ -29,6 +29,7 @@ namespace Utils
             }
 
             Arr = array2D;
+            Length = new int[2] { array2D.GetLength(0), array2D.GetLength(1) };
         }
 
         public static Tensor operator *(Tensor a, Tensor b) => new Tensor(MultiplyMatrices(a.Arr, b.Arr));
