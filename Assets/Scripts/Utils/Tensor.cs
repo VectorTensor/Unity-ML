@@ -44,11 +44,29 @@ namespace Utils
         public static Tensor operator /(float a, Tensor b) => new Tensor(DivideTensor(a, b.Arr));
         public static Tensor operator -(float a, Tensor b) => new Tensor(NumberSubstractByTensor(b.Arr, a));
         public static Tensor operator -(Tensor b,float a) => new Tensor(SubstractTensorByNumber(b.Arr, a));
+        public static Tensor operator -(Tensor a) => new Tensor(NegationMatrix(a.Arr));
         
 
         
         public Tensor T() => new Tensor(Transpose(Arr));
         
+        public static float[,] NegationMatrix(float [,] intMatrix)
+        {
+            int rows = intMatrix.GetLength(0);
+            int cols = intMatrix.GetLength(1);
+
+            float[,] floatMatrix = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    floatMatrix[i, j] = - intMatrix[i, j] ;
+                }
+            }
+
+            return floatMatrix;
+        }
         
         public static float[,] SubstractTensorByNumber(float [,] intMatrix, float n)
         {
@@ -234,33 +252,6 @@ namespace Utils
             return transposeMatrix;
         }
 
-        // public Tensor Mean(int axis)
-        // {
-        //
-        //     int rows = Length[axis];
-        //     int cols = Length[(axis+1)%2];
-        //
-        //     float[] means = new float[] { };
-        //
-        //     for (int i = 0; i < cols; i++)
-        //     {
-        //
-        //         float sum = 0 ;
-        //         for (int j = 0; j < rows ; j++)
-        //         {
-        //
-        //             sum += Arr[j, i];
-        //
-        //
-        //         }
-        //
-        //         means.Append(sum / rows);
-        //     }
-        //
-        //     return new Tensor(means);
-        //
-        //
-        // }
         
         public Tensor Mean(int axis)
         {

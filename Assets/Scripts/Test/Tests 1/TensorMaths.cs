@@ -62,6 +62,16 @@ namespace Test.Tests_1
             CollectionAssert.AreEqual(sub1.Arr,x.Arr,new FloatComparer(0.001f));
             CollectionAssert.AreEqual(sub2.Arr,y.Arr,new FloatComparer(0.001f));
         }
+
+        [Test]
+        public void TestNegation()
+        {
+
+            var x = -b;
+            Tensor neg = new Tensor(new float[] { 1, -2, -3, -1 });
+            CollectionAssert.AreEqual(neg.Arr, x.Arr,new FloatComparer(0.001f));
+
+        }
         
     }
     public class FloatComparer : IComparer
