@@ -388,7 +388,30 @@ namespace Utils
             return new Tensor(data);
 
         }
+        public static Tensor exp(Tensor t)
+        {
+
+            float[,] arr = t.Arr;
+            float[,] expo = new float[arr.GetLength(0),arr.GetLength(1)];
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+
+                    expo[i,j] = MathF.Exp(arr[i, j]);
+
+
+                }
+                
+            }
+
+            return new Tensor(arr);
+
+        }
 
         
     }
+    
 }

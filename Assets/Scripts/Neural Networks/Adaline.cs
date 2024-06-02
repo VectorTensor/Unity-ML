@@ -7,14 +7,14 @@ using Utils.Model;
 
 namespace Neural_Networks
 {
-    public class Adaline
+    public class Adaline : IModel
     {
-        private Tensor _weights;
-        private float _bias;
+        protected Tensor _weights;
+        protected float _bias;
 
-        private float[] _losses;
-        private float _eta;
-        private int _niter;
+        protected float[] _losses;
+        protected float _eta;
+        protected int _niter;
 
         public Adaline(float eta, int niter)
         {
@@ -38,7 +38,7 @@ namespace Neural_Networks
         /// </summary>
         /// <param name="X"></param>
         /// <param name="y"> y must be column matrix </param>
-        public Adaline Fit(Tensor X, Tensor y)
+        public IModel Fit(Tensor X, Tensor y)
         {
             _weights = new Tensor(RandomGenerator.RandomFloatArray(X.Length[1]));
             _bias = 0;
