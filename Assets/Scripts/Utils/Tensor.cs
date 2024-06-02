@@ -38,8 +38,32 @@ namespace Utils
         public static Tensor operator +(Tensor a, Tensor b) => new Tensor(AddMatrices(a.Arr, b.Arr));
         public static Tensor operator -(Tensor a, Tensor b) => new Tensor(SubMatrices(a.Arr, b.Arr));
         public static Tensor operator +(Tensor a, float b) => new Tensor(AddTensorByNumber(a.Arr, b));
+        public static Tensor operator /(float a, Tensor b) => new Tensor(DivideTensor(a, b.Arr));
+        
         public Tensor T() => new Tensor(Transpose(Arr));
-            
+
+        public static float[,] DivideTensor(float a, float[,] b)
+        {
+
+            float[,] arr = new float[b.GetLength(0), b.GetLength(1)];
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+
+                    arr[i, j] = a/b[i,j];
+
+                }
+                
+            }
+
+            return arr;
+
+
+
+        }
             
         public static float[,] ConvertToFloat(int[,] intMatrix)
         {
@@ -388,7 +412,7 @@ namespace Utils
             return new Tensor(data);
 
         }
-        public static Tensor exp(Tensor t)
+        public static Tensor Exp(Tensor t)
         {
 
             float[,] arr = t.Arr;
@@ -407,7 +431,7 @@ namespace Utils
                 
             }
 
-            return new Tensor(arr);
+            return new Tensor(expo);
 
         }
 
