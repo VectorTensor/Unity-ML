@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using TreeEditor;
+using UnityEngine.Assertions.Comparers;
 
 namespace Utils
 {
@@ -38,10 +40,51 @@ namespace Utils
         public static Tensor operator +(Tensor a, Tensor b) => new Tensor(AddMatrices(a.Arr, b.Arr));
         public static Tensor operator -(Tensor a, Tensor b) => new Tensor(SubMatrices(a.Arr, b.Arr));
         public static Tensor operator +(Tensor a, float b) => new Tensor(AddTensorByNumber(a.Arr, b));
+        public static Tensor operator +(float a, Tensor b) => new Tensor(AddTensorByNumber(b.Arr, a));
         public static Tensor operator /(float a, Tensor b) => new Tensor(DivideTensor(a, b.Arr));
+        public static Tensor operator -(float a, Tensor b) => new Tensor(NumberSubstractByTensor(b.Arr, a));
+        public static Tensor operator -(Tensor b,float a) => new Tensor(SubstractTensorByNumber(b.Arr, a));
+        
+
         
         public Tensor T() => new Tensor(Transpose(Arr));
+        
+        
+        public static float[,] SubstractTensorByNumber(float [,] intMatrix, float n)
+        {
+            int rows = intMatrix.GetLength(0);
+            int cols = intMatrix.GetLength(1);
 
+            float[,] floatMatrix = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    floatMatrix[i, j] = intMatrix[i, j] - n;
+                }
+            }
+
+            return floatMatrix;
+        }
+
+        public static float[,] NumberSubstractByTensor(float [,] intMatrix, float n)
+        {
+            int rows = intMatrix.GetLength(0);
+            int cols = intMatrix.GetLength(1);
+
+            float[,] floatMatrix = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    floatMatrix[i, j] = n - intMatrix[i, j] ;
+                }
+            }
+
+            return floatMatrix;
+        }
         public static float[,] DivideTensor(float a, float[,] b)
         {
 
@@ -61,9 +104,8 @@ namespace Utils
 
             return arr;
 
-
-
         }
+
             
         public static float[,] ConvertToFloat(int[,] intMatrix)
         {

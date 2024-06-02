@@ -42,6 +42,7 @@ namespace Neural_Networks
         new Tensor Activation(Tensor x)
         {
 
+//            return 1 / (1 + Tensor.Exp(-1 * x));
 
             return new Tensor(new []{1,2f});
 

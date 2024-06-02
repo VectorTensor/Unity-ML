@@ -11,12 +11,14 @@ namespace Test.Tests_1
     {
 
         private Tensor a;
+        private Tensor b;
 
         [SetUp]
         public void SetUpTensor()
         {
 
             a = new Tensor(new[] { -1, 2, 0, 1f });
+            b = new Tensor(new[] { -1, 2, 3, 1f });
             
 
         }
@@ -30,6 +32,35 @@ namespace Test.Tests_1
             CollectionAssert.AreEqual(act.Arr, x.Arr,new FloatComparer(0.001f));
 
 
+        }
+
+        [Test]
+        public void TestDivide()
+        {
+
+            var x = 1/b;
+            Tensor act = new Tensor(new[] { -1f, 0.5f, 0.33333333f, 1 });
+            CollectionAssert.AreEqual(act.Arr, x.Arr, new FloatComparer(0.001f));
+
+        }
+
+        [Test]
+        public void TestAdd()
+        {
+            var x = 1 + b;
+            Tensor add = new Tensor(new float[]{0, 3f, 4, 2});
+            CollectionAssert.AreEqual(add.Arr, x.Arr, new FloatComparer(0.001f));
+        }
+
+        [Test]
+        public void TestSubract()
+        {
+            var x = 1 - b;
+            Tensor sub1= new Tensor(new float[] { 2, -1, -2, 0 });
+            Tensor sub2= new Tensor(new float[] {-2,  1,  2,  0 });
+            var y = b - 1;
+            CollectionAssert.AreEqual(sub1.Arr,x.Arr,new FloatComparer(0.001f));
+            CollectionAssert.AreEqual(sub2.Arr,y.Arr,new FloatComparer(0.001f));
         }
         
     }
