@@ -39,4 +39,18 @@ public class TensorTest
         Assert.AreEqual(new float[,]{{1,2,4,5}},_p.Arr);
     }
 
+    [Test]
+    public void WhereFunctionTensor()
+    {
+
+        Tensor a = _a.Where((d) => d >4, 10,1);
+        Assert.AreEqual(new float[,]{{1,1,1,10},{1,1,1,10}},a.Arr);
+        
+        Tensor b = _a.Where((d) => d >4, 10);
+        Assert.AreEqual(new float[,]{{1,2,4,10},{1,2,4,10}},b.Arr);
+
+        Tensor c = _a.Where((d) => d >4, 10,true);
+        Assert.AreEqual(new float[,]{{10,10,10,5},{10,10,10,5}},c.Arr);
+    }
+
 }

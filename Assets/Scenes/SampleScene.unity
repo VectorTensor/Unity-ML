@@ -311,6 +311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1465984635}
   - component: {fileID: 1465984636}
+  - component: {fileID: 1465984637}
   m_Layer: 0
   m_Name: Test
   m_TagString: test
@@ -345,4 +346,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47338ef69fd4bd885c07966ab36d36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textAsset: {fileID: 4900000, guid: 7caddabe7b6b497b8ea067c5e1ec8efc, type: 3}
+  textAsset: {fileID: 4900000, guid: 6f26d5eb880b4b76b349fee7d4536369, type: 3}
+--- !u!114 &1465984637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465984633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5763760893146c64b8c1fa779777524f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _csvSerivce: {fileID: 1465984636}

@@ -1,8 +1,12 @@
 using System;
+using System.IO;
 using System.Linq;
+using TreeEditor;
+using UnityEngine.Assertions.Comparers;
 
 namespace Utils
 {
+    [Serializable]
     public class Tensor
     {
 
@@ -27,6 +31,7 @@ namespace Utils
             }
 
             Arr = array2D;
+            Length = new int[2] { array2D.GetLength(0), array2D.GetLength(1) };
         }
 
         public static Tensor operator *(Tensor a, Tensor b) => new Tensor(MultiplyMatrices(a.Arr, b.Arr));
@@ -35,8 +40,90 @@ namespace Utils
         public static Tensor operator +(Tensor a, Tensor b) => new Tensor(AddMatrices(a.Arr, b.Arr));
         public static Tensor operator -(Tensor a, Tensor b) => new Tensor(SubMatrices(a.Arr, b.Arr));
         public static Tensor operator +(Tensor a, float b) => new Tensor(AddTensorByNumber(a.Arr, b));
+        public static Tensor operator +(float a, Tensor b) => new Tensor(AddTensorByNumber(b.Arr, a));
+        public static Tensor operator /(float a, Tensor b) => new Tensor(DivideTensor(a, b.Arr));
+        public static Tensor operator -(float a, Tensor b) => new Tensor(NumberSubstractByTensor(b.Arr, a));
+        public static Tensor operator -(Tensor b,float a) => new Tensor(SubstractTensorByNumber(b.Arr, a));
+        public static Tensor operator -(Tensor a) => new Tensor(NegationMatrix(a.Arr));
+        
+
+        
         public Tensor T() => new Tensor(Transpose(Arr));
-            
+        
+        public static float[,] NegationMatrix(float [,] intMatrix)
+        {
+            int rows = intMatrix.GetLength(0);
+            int cols = intMatrix.GetLength(1);
+
+            float[,] floatMatrix = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    floatMatrix[i, j] = - intMatrix[i, j] ;
+                }
+            }
+
+            return floatMatrix;
+        }
+        
+        public static float[,] SubstractTensorByNumber(float [,] intMatrix, float n)
+        {
+            int rows = intMatrix.GetLength(0);
+            int cols = intMatrix.GetLength(1);
+
+            float[,] floatMatrix = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    floatMatrix[i, j] = intMatrix[i, j] - n;
+                }
+            }
+
+            return floatMatrix;
+        }
+
+        public static float[,] NumberSubstractByTensor(float [,] intMatrix, float n)
+        {
+            int rows = intMatrix.GetLength(0);
+            int cols = intMatrix.GetLength(1);
+
+            float[,] floatMatrix = new float[rows, cols];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    floatMatrix[i, j] = n - intMatrix[i, j] ;
+                }
+            }
+
+            return floatMatrix;
+        }
+        public static float[,] DivideTensor(float a, float[,] b)
+        {
+
+            float[,] arr = new float[b.GetLength(0), b.GetLength(1)];
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+
+                    arr[i, j] = a/b[i,j];
+
+                }
+                
+            }
+
+            return arr;
+
+        }
+
             
         public static float[,] ConvertToFloat(int[,] intMatrix)
         {
@@ -73,6 +160,8 @@ namespace Utils
 
             return floatMatrix;
         }
+        
+        
         
         
         public float this[int i , int j]
@@ -163,34 +252,43 @@ namespace Utils
             return transposeMatrix;
         }
 
+        
         public Tensor Mean(int axis)
         {
 
-            int rows = Length[axis];
-            int cols = Length[(axis+1)%2];
+            int first = Length[axis];
+            int second = Length[(axis+1)%2];
 
-            float[] means = new float[] { };
+            float[] means = new float[second];
 
-            for (int i = 0; i < cols; i++)
+            for (int i = 0; i < second; i++)
             {
-
                 float sum = 0 ;
-                for (int j = 0; j < rows ; j++)
+                for (int j = 0; j < first ; j++)
                 {
 
-                    sum += Arr[j, i];
-
+                    if (axis == 0)
+                    {
+                        
+                        sum += Arr[j, i];
+                    }
+                    else
+                    {
+                        sum += Arr[i, j];
+                    }
+                
 
                 }
 
-                means.Append(sum / rows);
+                means[i] = sum;
+
+
             }
 
             return new Tensor(means);
 
 
         }
-        
         
         static float[,] MultiplyMatrixByScalar(float[,] matrix, float scalar)
         {
@@ -284,6 +382,93 @@ namespace Utils
             return result;
         }
 
+        /// <summary>
+        /// This function takes a condition and for every element of the tensor that statisfies the condition it returns a otherwise b
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public Tensor Where(Func<float, bool> condition, float a, float b)
+        {
+
+            float[,] data = new float[Arr.GetLength(0),Arr.GetLength(1)];
+            for (int i = 0; i < Arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < Arr.GetLength(1); j++)
+                {
+
+                    data[i,j] = condition(Arr[i,j]) ? a : b;
+
+                }
+                
+            }
+
+            return new Tensor(data);
+
+        }
+        
+        /// <summary>
+        /// Overload for the where function where in one of the condition we just the leave the value as it is if default condition = true, we get the same value for true 
+        /// and default condition = false we get the same value for false condition
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="a"></param>
+        /// <param name="defaultCondtion"></param>
+        /// <returns></returns>
+        public Tensor Where(Func<float, bool> condition, float a, bool defaultCondtion = false)
+        {
+
+            float[,] data = new float[Arr.GetLength(0),Arr.GetLength(1)];
+            for (int i = 0; i < Arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < Arr.GetLength(1); j++)
+                {
+
+                    if (!defaultCondtion)
+                    {
+                        
+                        data[i,j] = condition(Arr[i,j]) ? a : Arr[i,j];
+                    }
+                    else
+                    {
+                        
+                        data[i,j] = condition(Arr[i,j]) ? Arr[i,j]:a;
+                    }
+
+                }
+                
+            }
+
+            return new Tensor(data);
+
+        }
+        public static Tensor Exp(Tensor t)
+        {
+
+            float[,] arr = t.Arr;
+            float[,] expo = new float[arr.GetLength(0),arr.GetLength(1)];
+
+            for (int i = 0; i < arr.GetLength(0); i++)
+            {
+
+                for (int j = 0; j < arr.GetLength(1); j++)
+                {
+
+                    expo[i,j] = MathF.Exp(arr[i, j]);
+
+
+                }
+                
+            }
+
+            return new Tensor(expo);
+
+        }
+
         
     }
+    
 }

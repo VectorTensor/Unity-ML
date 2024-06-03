@@ -54,7 +54,8 @@ namespace Utils
                 var p = lines[0];
                 p = p.Replace(" ", "");
                 Header = Regex.Split(p, ",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-                
+                Header[Header.Length - 1] =Header[Header.Length - 1].Replace("\r", "");
+                lines = lines.Skip(1).ToArray();
             }
             else
             {
