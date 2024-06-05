@@ -445,26 +445,38 @@ namespace Utils
             return new Tensor(data);
 
         }
-        public static Tensor Exp(Tensor t)
+
+        static float[,] ApplyEach(Func<float, float> operation, float[,] mat)
         {
-
-            float[,] arr = t.Arr;
-            float[,] expo = new float[arr.GetLength(0),arr.GetLength(1)];
-
-            for (int i = 0; i < arr.GetLength(0); i++)
+            var opera = new float[mat.GetLength(0), mat.GetLength(1)];
+            for (int i = 0; i < mat.GetLength(0); i++)
             {
 
-                for (int j = 0; j < arr.GetLength(1); j++)
+                for (int j = 0; j < mat.GetLength(1); j++)
                 {
 
-                    expo[i,j] = MathF.Exp(arr[i, j]);
+                    opera[i,j] = operation(mat[i, j]);
 
 
                 }
                 
             }
 
-            return new Tensor(expo);
+            return opera;
+
+        }
+
+        public static Tensor Log(Tensor t)
+        {
+            var o = ApplyEach((f) => MathF.Log(f) , t.Arr);
+            return new Tensor(o);
+        }
+        
+        public static Tensor Exp(Tensor t)
+        {
+
+            var o = ApplyEach((f) => MathF.Exp(f) , t.Arr);
+            return new Tensor(o);
 
         }
 

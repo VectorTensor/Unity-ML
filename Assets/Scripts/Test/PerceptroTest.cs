@@ -16,9 +16,9 @@ namespace Test
         {
             
 
-            var x = File.ReadAllText("Assets/models/ad1.json");
+            var x = File.ReadAllText("Assets/models/log.json");
             AdalineModelDto d = JsonUtility.FromJson<AdalineModelDto>(x);
-            var p = new Adaline(d);
+            var p = new LogisticRegression(d);
             var  parser = new TextAssetParser<float>(_csvSerivce,true);
 
             float[,] feat_test = parser[0, 4, 1][new[] { "A", "B"}];
