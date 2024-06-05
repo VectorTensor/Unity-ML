@@ -8,6 +8,7 @@ namespace Test.Tests{
     public class ModelEvalTest
     {
         private ConfusionMatrix Con;
+        private ClassificationMetrics CM;
 
         private int[] pred;
         private int[] act;
@@ -31,6 +32,23 @@ namespace Test.Tests{
             int[,] exp = new int[,] { { 3, 2 }, { 2, 3 } };
             CollectionAssert.AreEqual(exp, Con.cm);
             
+        }
+
+        [Test]
+        public void TestMetrics()
+        {
+            
+            Con.CreateConfusionMatrix(pred, act);
+            CM = ClassificationMetrics.CalculateMetrics(Con);
+            float exp = 0.6f;
+            Assert.AreEqual(exp,CM.metrics["Accuracy"],0.001f);
+            Assert.AreEqual(exp,CM.metrics["Precision"],0.001f);
+            Assert.AreEqual(exp,CM.metrics["Recall"],0.001f);
+            Assert.AreEqual(exp,CM.metrics["F1Score"],0.001f);
+            
+            
+            
+
         }
         
     }
