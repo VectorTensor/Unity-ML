@@ -44,6 +44,7 @@ namespace Utils.Services
         {
             // Check size exceptions
             List<Dictionary<string, T>> reqFrame= new();
+            y = y == -1 ? _frame.Count : y;
 
             for (int i = x; i < y; i = i + z)
             {

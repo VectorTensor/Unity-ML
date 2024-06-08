@@ -22,9 +22,11 @@ namespace Test
             AdalineModelDto d = JsonUtility.FromJson<AdalineModelDto>(x);
             var p = new LogisticRegression(d);
             var  parser = new TextAssetParser<float>(_csvSerivce,true);
+            var split = parser.CreateTrainTestSplit(0.2f);
+            
 
-            float[,] feat_test = parser[0, 30, 1][new[] {"Feature_1","Feature_2","Feature_3"}];
-            float[,] y_test = parser[ 0, 30, 1 ][new[] { "Target"}];
+            float[,] feat_test = parser[0, -1, 1][new[] {"Feature_1","Feature_2","Feature_3"}];
+            float[,] y_test = parser[ 0, -1, 1 ][new[] { "Target"}];
             Tensor X_test = new Tensor(feat_test);
             Tensor Y_test = new Tensor(y_test);
             var y_prd = p.Predict(X_test);
