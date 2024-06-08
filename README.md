@@ -12,5 +12,7 @@ Basic Adaline Model for classification. [Adaline](https://github.com/VectorTenso
 ## Logistic Regression
 Basic Logistic Regression for classification. [Logistic Regression](https://github.com/VectorTensor/Unity-ML/blob/main/Assets/Scripts/Neural%20Networks/LogisticRegression.cs)
 
+## Evaluation Metrics
+Created confusion matrix and various evaluation metrics like accuracy, precision, recall and f1 score. [Evalution](https://github.com/VectorTensor/Unity-ML/tree/main/Assets/Scripts/ModelEvaluation)
 
 
