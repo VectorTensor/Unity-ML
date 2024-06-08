@@ -12,6 +12,7 @@ namespace Test.Tests_1
 
         private Tensor a;
         private Tensor b;
+        private Tensor c;
 
         [SetUp]
         public void SetUpTensor()
@@ -19,7 +20,8 @@ namespace Test.Tests_1
 
             a = new Tensor(new[] { -1, 2, 0, 1f });
             b = new Tensor(new[] { -1, 2, 3, 1f });
-            
+            c = new Tensor(new[] { 4, 2, 3f, 1 });
+
 
         }
 
@@ -70,6 +72,16 @@ namespace Test.Tests_1
             var x = -b;
             Tensor neg = new Tensor(new float[] { 1, -2, -3, -1 });
             CollectionAssert.AreEqual(neg.Arr, x.Arr,new FloatComparer(0.001f));
+
+        }
+
+        [Test]
+        public void TestLog()
+        {
+
+            var x = Tensor.Log(c);
+            Tensor ln = new Tensor(new float[] { 1.38629436f, 0.69314718f, 1.09861229f, 0 });
+            CollectionAssert.AreEqual(ln.Arr,x.Arr,new FloatComparer(0.001f));
 
         }
         

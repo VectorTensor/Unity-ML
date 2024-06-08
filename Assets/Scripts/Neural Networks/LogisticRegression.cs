@@ -18,7 +18,7 @@ namespace Neural_Networks
         {
             _weights = new Tensor(RandomGenerator.RandomFloatArray(X.Length[1]));
             _bias = 0;
-            _losses = new float[_niter] ;
+            _losses = (new float[_niter]) ;
 
             for (int i = 0; i < _niter; i++)
             {
@@ -31,8 +31,9 @@ namespace Neural_Networks
 
                 //var gh = error.Mean(0);
                 _bias += _eta * 2.0f * error.Mean(0)[0,0];
+                
 
-                _losses[i] = (error.Mean(0)[0, 0]);
+                _losses[i] = Matrix.GetRow<float>(array2D:(-(y * Tensor.Log(output).T())- ((1-y)*Tensor.Log(1-output).T())).Arr,0)[0];
 
             }
 

@@ -18,13 +18,13 @@ namespace Test
             
             txtParser = new TextAssetParser<float>(_csvSerivce,true );
             header = txtParser.Header;
-            float[,] features = txtParser[0, 4, 1][new[] {"A","B"}];
-            float[,] y = txtParser[0, 4, 1][new[] { "O" }];
+            float[,] features = txtParser[0, 65, 1][new[] {"Feature_1","Feature_2","Feature_3"}];
+            float[,] y = txtParser[0, 65, 1][new[] { "Target" }];
             Tensor X_train = new Tensor(features);
             Tensor Y_train = new Tensor(y);
-            Adaline model = new Adaline(0.001f, 100000);
+            LogisticRegression model = new LogisticRegression(0.001f, 100000);
             model.Fit(X_train, Y_train);
-            model.SaveModel("Assets/models/ad1.json");
+            model.SaveModel("Assets/models/log.json");
             Debug.Log($"Training completed on {model}");
             
         }

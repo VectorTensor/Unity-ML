@@ -88,6 +88,30 @@ namespace Utils
 
             return sum;
         }
+        public static T[] GetRow<T>(T[,] array2D, int rowIndex)
+        {
+            int columns = array2D.GetLength(1);
+            T[] row = new T[columns];
+
+            for (int i = 0; i < columns; i++)
+            {
+                row[i] = array2D[rowIndex, i];
+            }
+
+            return row;
+        }
+        public static T[] GetColumn<T>(T[,] array2D, int columnIndex)
+        {
+            int rows = array2D.GetLength(0);
+            T[] column = new T[rows];
+
+            for (int i = 0; i < rows; i++)
+            {
+                column[i] = array2D[i, columnIndex];
+            }
+
+            return column;
+        }
         
     }
 }
